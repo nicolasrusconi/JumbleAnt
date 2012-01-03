@@ -1,1 +1,26 @@
 Jumble Ant task
+This jumble jar allows you to easily invoke jumble in your ant project to score the classes and generate an xml report.
+To learn more about Jumble or Mutation testing go to http://jumble.sourceforge.net/
+
+Usage:
+Here is a simple example on how to use the ant:
+
+<?xml version="1.0"?>
+<project name="..." default="..." basedir=".">
+   ...
+   <property name="jumble.path" value="<path>/JumbleAnt-1.0-jar-with-dependencies.jar"/>
+   <taskdef name="jumble" classname="com.jumble.JumbleTask" classpath="${jumble.path}" />
+
+   <path id="app.path">
+      ... <your application class path>...
+   </path>
+
+   <target name="runJumble">
+     <jumble appClasspath="app.path" jumbleClasspath="${jumble.path}" reportDir="./">
+       <fileset dir="..\bin" includes="**\*.class" excludes="**\*Test.class"/>
+     </jumble>
+   </target>
+   ...
+</project>
+
+remember to replace <path> and <your application class path> to get it working.
