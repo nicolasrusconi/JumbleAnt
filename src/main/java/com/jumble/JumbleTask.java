@@ -20,6 +20,7 @@ public class JumbleTask extends Task {
     private Iterator<?> iterator;
     private String appClasspath;
     private File classesDir;
+    private String[] options = new String[0];
 
     public void execute() throws BuildException {
         Java java = new Java(this);
@@ -33,6 +34,10 @@ public class JumbleTask extends Task {
         java.createArg().setValue("--reportDir=" + reportDir);
         java.createArg().setValue("--classpath=" + generateAppClasspath());
         java.createArg().setValue("--printer=" + XmlAndConsoleReportListener.class.getCanonicalName());
+
+        for (String option : options) {
+            java.createArg().setValue(option);
+        }
 
         if (!exclude.isEmpty()) {
             java.createArg().setValue("--exclude=" + exclude);
@@ -98,6 +103,10 @@ public class JumbleTask extends Task {
 
     public void setAppClasspath(String appClasspath) {
         this.appClasspath = appClasspath;
+    }
+
+    public void setOptions(String options) {
+        this.options = options.split(" ");
     }
 
 }
